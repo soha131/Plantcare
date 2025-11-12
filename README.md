@@ -56,7 +56,7 @@ The AI runs through a backend API or TensorFlow Lite (for offline prediction).
 ---
 
 ## 🛠️ Tech Stack
-Frontend (Mobile App)
+# Frontend (Mobile App)
 
 Flutter: Cross-platform mobile framework (Dart)
 BLoC Pattern: State management with flutter_bloc
@@ -68,18 +68,18 @@ Firebase Core (SDK)
 
 
 
-Backend/API
+# Backend/API
 
 Flask: Python-based REST API server
 Machine Learning: Plant disease detection model
 HTTP Server: Image capture and sensor data endpoints
 
-Third-Party Services
+# Third-Party Services
 
-Google Sign-In: OAuth authentication
-Apple Sign-In: iOS authentication
-Facebook Authentication: Social login
-WebView Flutter: Live camera feed streaming
+. Google Sign-In: OAuth authentication
+. Apple Sign-In: iOS authentication
+. Facebook Authentication: Social login
+. WebView Flutter: Live camera feed streaming
 
 UI/UX Libraries
 
