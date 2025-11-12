@@ -158,6 +158,7 @@ plantcare/
 └── pubspec.yaml                       # Dependencies
 
 ---
+```
 
 
 ## 📅 Future Enhancements
