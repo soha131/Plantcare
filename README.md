@@ -16,17 +16,15 @@ Built with Flutter for cross-platform compatibility, PlantCare AI combines moder
 
 
 🌡️ Real-Time Monitoring
-
-Soil Moisture Tracking: Monitor soil moisture levels with visual feedback and alerts
-Temperature Monitoring: Real-time soil temperature readings
-Live Feed: Stream live video from your plant camera
+    - Soil Moisture Tracking: Monitor soil moisture levels with visual feedback and alerts
+    - Temperature Monitoring: Real-time soil temperature readings
+    - Live Feed: Stream live video from your plant camera
 
 🔬 AI-Powered Disease Detection
-
-Image Capture: Capture plant images directly from the integrated camera
-Disease Diagnosis: AI model analyzes images and identifies plant diseases
-Recommendations: Receive actionable treatment recommendations for detected diseases
-Detection History: View past diagnoses with timestamps and images
+    - Image Capture: Capture plant images directly from the integrated camera
+    - Disease Diagnosis: AI model analyzes images and identifies plant diseases
+    - Recommendations: Receive actionable treatment recommendations for detected diseases
+    - Detection History: View past diagnoses with timestamps and images
 
 👤 User Management
     - Email/Password Authentication: Traditional registration and login
@@ -158,11 +156,11 @@ plantcare/
 
 
 ## 📅 Future Enhancements
+   -  🌍 Multi-Plant Management - Support multiple plants with individual profiles and tracking dashboards.
+   -  📈 Growth Analytics - Visual charts showing plant health trends, growth patterns, and environmental history.
+   - 🔔 Smart Notifications - Automated alerts for watering schedules, abnormal sensor readings, and disease risks.
+   - 🗣️ Voice Assistant - Voice commands for hands-free monitoring and plant care guidance.
 
-🌍 Multi-Plant Management - Support multiple plants with individual profiles and tracking dashboards.
-📈 Growth Analytics - Visual charts showing plant health trends, growth patterns, and environmental history.
-🔔 Smart Notifications - Automated alerts for watering schedules, abnormal sensor readings, and disease risks.
-🗣️ Voice Assistant - Voice commands for hands-free monitoring and plant care guidance.
 ---
 
 ## 🤝 Contributing
