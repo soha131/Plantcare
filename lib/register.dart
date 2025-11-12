@@ -1,11 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:plantcare/services/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'disease_diagnosis.dart';
 import 'forget_password.dart';
 import 'login.dart';
 import 'plant_health.dart';
@@ -20,33 +21,49 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
+  final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
+
   bool _isLoading = false;
   bool _rememberMe = false;
 
-  Future<void> _registerWithEmail() async {
-    if (!_formKey.currentState!.validate()) return;
+  void _registerWithEmail() async {
+    setState(() {
+      _isLoading = true;
+    });
 
-    setState(() => _isLoading = true);
     try {
-      final userCredential = await _auth.createUserWithEmailAndPassword(
+      final response = await ApiService.register(
+        username: _usernameController.text.trim(),
+        fullName: _fullNameController.text.trim(),
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      await userCredential.user?.updateDisplayName(_nameController.text.trim());
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => PlantHealthScreen()),
-      );
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        final message = jsonData['message'] ?? 'Registration successful';
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('✅ $message')),
+        );
+
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("❌ Registration failed: ${response.body}")),
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${e.toString()}')),
+        SnackBar(content: Text("⚠️ Error occurred: $e")),
       );
     } finally {
-      setState(() => _isLoading = false);
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -114,7 +131,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       if (result.status == LoginStatus.success) {
         final userData = await FacebookAuth.instance.getUserData();
-        print('userData: $userData');
 
         // احفظ البيانات
         final prefs = await SharedPreferences.getInstance();
@@ -133,14 +149,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Facebook login failed: ${result.message}')),
         );
-        print('Facebook login failed: ${result.message}');
       }
     } catch (e) {
       // لو فيه استثناء
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('An error occurred: $e')),
       );
-      print('An error occurred: $e');
 
     } finally {
       setState(() {
@@ -152,7 +166,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _fullNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -193,7 +207,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 30),
                   TextFormField(
-                    controller: _nameController,
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.person, color: Color(0xff607c61)),
+                      hintText: 'Username',
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your username';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 12),
+
+                  TextFormField(
+                    controller: _fullNameController,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person, color: Color(0xff607c61)),
                       hintText: 'Full Name',

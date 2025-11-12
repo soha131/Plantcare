@@ -1,4 +1,3 @@
-// cubit/disease_detection_state.dart
 
 import 'model.dart';
 

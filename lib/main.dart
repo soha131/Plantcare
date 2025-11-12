@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:plantcare/splash.dart';
+import 'login.dart';
 import 'model/detect_cubit.dart';
 import 'model/history_cubit.dart';
 
@@ -35,6 +36,10 @@ class MyApp extends StatelessWidget {
     ], child: MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
+        routes: {
+          '/login': (context) => LoginScreen(), // اسم الشاشة اللي بيرجع لها بعد تسجيل الخروج
+        }
+
     ));
   }
 }

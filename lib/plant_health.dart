@@ -161,18 +161,75 @@ class PlantHealthScreen extends StatelessWidget {
     );
   }
 }*/
+import 'dart:convert';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:plantcare/services/api_service.dart';
 import 'disease_diagnosis.dart';
 import 'history_screen.dart';
 
-class PlantHealthScreen extends StatelessWidget {
+class PlantHealthScreen extends StatefulWidget {
   final String? userName;
-  final double soilMoistureValue = 46; // هنا بنخزن القيمة المعروضة
 
   const PlantHealthScreen({super.key, this.userName});
 
+  @override
+  _PlantHealthScreenState createState() => _PlantHealthScreenState();
+}
+
+class _PlantHealthScreenState extends State<PlantHealthScreen> {
+  double? soilMoistureValue;
+  double? temperature;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSensorData();
+  }
+
+  Future<void> fetchSensorData() async {
+    try {
+      final response = await ApiService.getSensorData();
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        if (data['sensor_data'] != null && data['sensor_data'] is String) {
+          final sensorString = data['sensor_data']; // ex: "Temp: 27C, Humidity: 70%"
+          final regex = RegExp(r'Temp:\s*(\d+)C,\s*Humidity:\s*(\d+)%');
+          final match = regex.firstMatch(sensorString);
+
+          if (match != null) {
+            final tempValue = double.parse(match.group(1)!);
+            final moistureValue = double.parse(match.group(2)!);
+
+            if (mounted) {
+              setState(() {
+                temperature = tempValue;
+                soilMoistureValue = moistureValue;
+              });
+            }
+          } else {
+            print('⚠️ Regex did not match: $sensorString');
+          }
+        } else {
+          print('⚠️ sensor_data is missing or not a string');
+        }
+      } else {
+        print('⚠️ Request failed with status: ${response.statusCode}');
+      }
+    } catch (e, stackTrace) {
+      print('❌ Error in fetchSensorData: $e');
+      print(stackTrace);
+    }
+  }
+
+
   void _checkSoilMoisture(BuildContext context, double value) {
+
     String message;
     if (value < 30) {
       message = 'Soil moisture is LOW';
@@ -193,7 +250,6 @@ class PlantHealthScreen extends StatelessWidget {
       flushbarPosition: FlushbarPosition.TOP,
     ).show(context);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -277,13 +333,18 @@ class PlantHealthScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   trailing: Text(
-                    '${soilMoistureValue.toStringAsFixed(0)}%',
+                    soilMoistureValue != null
+                        ? '${soilMoistureValue!.toStringAsFixed(0)}%'
+                        : 'Loading...',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onTap: () => _checkSoilMoisture(context, soilMoistureValue),
+                  onTap: soilMoistureValue != null
+                      ? () => _checkSoilMoisture(context, soilMoistureValue!)
+                      : null,
+
                 ),
               ),
               Card(
@@ -294,7 +355,9 @@ class PlantHealthScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   trailing: Text(
-                    '22.5°C',
+                    temperature != null
+                        ? '${temperature!.toStringAsFixed(1)}°C'
+                        : 'Loading...',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -350,6 +413,8 @@ class PlantHealthScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 40),
+
+
             ],
           ),
         ),

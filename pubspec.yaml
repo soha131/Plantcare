@@ -49,6 +49,8 @@ dependencies:
   firebase_auth: ^5.6.1
   cloud_firestore: ^5.6.10
   intl: ^0.18.1
+  path_provider: ^2.1.1
+  webview_flutter: ^4.2.2 # أو أحدث نسخة متاحة
 
 dev_dependencies:
   flutter_test:

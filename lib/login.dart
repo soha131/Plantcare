@@ -1,13 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:plantcare/plant_health.dart';
+import 'package:plantcare/services/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'disease_diagnosis.dart';
-import 'forget_password.dart';
 import 'register.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,30 +22,44 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
   bool _rememberMe = false;
   bool _isPasswordVisible = false;
   bool _isLoading = false;
 
-  // Email/Password Login
-  Future<void> _handleLogin() async {
-    if (!_formKey.currentState!.validate()) return;
+  void _handleLogin() async {
+    setState(() {
+      _isLoading = true;
+    });
 
-    setState(() => _isLoading = true);
     try {
-      await _auth.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
+      final response = await ApiService.login(
+        username: _usernameController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => PlantHealthScreen()),
-      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final message = data['message'] ?? 'Login successful';
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('✅ $message')),
+        );
+
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => PlantHealthScreen()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('❌ Login failed: ${response.body}')),
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login Error: ${e.toString()}')),
+        SnackBar(content: Text("⚠️ Error occurred: $e")),
       );
     } finally {
-      setState(() => _isLoading = false);
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -114,7 +128,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (result.status == LoginStatus.success) {
         final userData = await FacebookAuth.instance.getUserData();
-        print('userData: $userData');
 
         // احفظ البيانات
         final prefs = await SharedPreferences.getInstance();
@@ -133,14 +146,12 @@ class _LoginScreenState extends State<LoginScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Facebook login failed: ${result.message}')),
         );
-        print('Facebook login failed: ${result.message}');
       }
     } catch (e) {
       // لو فيه استثناء
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('An error occurred: $e')),
       );
-      print('An error occurred: $e');
 
     } finally {
       setState(() {
@@ -187,6 +198,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                   SizedBox(height: 30),
+                  TextFormField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.person, color: Color(0xff607c61)),
+                      hintText: 'Username',
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your username';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 12),
+
                   TextFormField(
                     controller: _emailController,
                     validator: (value) {
@@ -272,19 +304,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Text('Remember Me', style: TextStyle(color: Color(0xff607c61))),
                         ],
-                      ),
-                      TextButton(
-                        onPressed:
-                        (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
-                          );
-                        },
-                        child: Text(
-                          'Forgot Password ?',
-                          style: TextStyle(color: Color(0xff607c61)),
-                        ),
                       ),
                     ],
                   ),
