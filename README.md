@@ -9,6 +9,7 @@ A Flutter-based mobile app prototype that detects plant diseases using image-bas
 
 PlantCare AI is a comprehensive mobile application that helps users monitor and maintain their plant's health through IoT sensors and AI-powered disease detection. The app provides real-time environmental data (soil moisture, temperature) and leverages machine learning to diagnose plant diseases from images captured via an integrated camera system.
 Built with Flutter for cross-platform compatibility, PlantCare AI combines modern mobile development practices with cloud services and machine learning to deliver an intelligent gardening assistant.
+
 ---
 
 ## ✨ Key Features
@@ -39,6 +40,7 @@ Session Management: Secure session handling with automatic logout
 Cloud Storage: Firestore integration for storing user predictions
 History Tracking: Complete history of disease detections with images
 User Profiles: Personalized experience with user data storage
+
 ---
 
 ## 🧠 AI Integration
@@ -85,6 +87,7 @@ Icons Plus: Extended icon sets
 Another Flushbar: Custom notifications
 Intl: Internationalization and date formatting
 Path Provider: File system access
+
 ---
 
 ## 📸 Screenshots
