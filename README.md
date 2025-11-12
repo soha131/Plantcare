@@ -29,17 +29,15 @@ Recommendations: Receive actionable treatment recommendations for detected disea
 Detection History: View past diagnoses with timestamps and images
 
 👤 User Management
-
-Email/Password Authentication: Traditional registration and login
-Social Authentication: Sign in with Google, Apple, or Facebook
-Password Recovery: Forgot password functionality with email reset
-Session Management: Secure session handling with automatic logout
+    - Email/Password Authentication: Traditional registration and login
+    - Social Authentication: Sign in with Google, Apple, or Facebook
+    - Password Recovery: Forgot password functionality with email reset
+    - Session Management: Secure session handling with automatic logout
 
 📊 Data Persistence
-
-Cloud Storage: Firestore integration for storing user predictions
-History Tracking: Complete history of disease detections with images
-User Profiles: Personalized experience with user data storage
+   - Cloud Storage: Firestore integration for storing user predictions
+   - History Tracking: Complete history of disease detections with images
+   - User Profiles: Personalized experience with user data storage
 
 ---
 
@@ -57,31 +55,31 @@ The AI runs through a backend API or TensorFlow Lite (for offline prediction).
 
 ## 🛠️ Tech Stack
 - Frontend (Mobile App)
-    Flutter: Cross-platform mobile framework (Dart)
-    BLoC Pattern: State management with flutter_bloc
+   -  Flutter: Cross-platform mobile framework (Dart)
+   - BLoC Pattern: State management with flutter_bloc
     Firebase Suite:
-      Firebase Auth (Authentication)
-      Cloud Firestore (Database)
-      Firebase Core (SDK)
+     - Firebase Auth (Authentication)
+     - Cloud Firestore (Database)
+     - Firebase Core (SDK)
 
 
 
 -  Backend/API
-    Flask: Python-based REST API server
-    Machine Learning: Plant disease detection model
-    HTTP Server: Image capture and sensor data endpoints
+    - Flask: Python-based REST API server
+    - Machine Learning: Plant disease detection model
+    - HTTP Server: Image capture and sensor data endpoints
 
 - Third-Party Services
-    Google Sign-In: OAuth authentication
-    Apple Sign-In: iOS authentication
-    Facebook Authentication: Social login
-    WebView Flutter: Live camera feed streaming
+    - Google Sign-In: OAuth authentication
+    - Apple Sign-In: iOS authentication
+    - Facebook Authentication: Social login
+    - WebView Flutter: Live camera feed streaming
 
 - UI/UX Libraries
-  Icons Plus: Extended icon sets
-  Another Flushbar: Custom notifications
-  Intl: Internationalization and date formatting
-  Path Provider: File system access
+  - Icons Plus: Extended icon sets
+  - Another Flushbar: Custom notifications
+  - Intl: Internationalization and date formatting
+  - Path Provider: File system access
 
 ---
 
