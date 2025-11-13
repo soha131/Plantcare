@@ -1,4 +1,4 @@
-# 🩺 PlantCare AI
+#  PlantCare AI
 
 A Flutter-based mobile app prototype that detects plant diseases using image-based AI models deployed on Raspberry Pi. Users can capture leaf images to receive real-time disease diagnosis and health updates. The app features a nature-inspired UI and integrates Firebase for authentication and data storage.
 
