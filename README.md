@@ -12,63 +12,48 @@ Built with Flutter for cross-platform compatibility, PlantCare AI combines moder
 
 ## ✨ Key Feature
 
-   _	 **🌡️ Real-Time Monitoring**
-            • Soil Moisture Tracking: Monitor soil moisture levels with visual feedback and alerts
-            • Temperature Monitoring: Real-time soil temperature readings
-            • Live Feed: Stream live video from your plant camera
-   
-   •	**🔬 AI-Powered Disease Detection**
-         - Image Capture: Capture plant images directly from the integrated camera
-         - Disease Diagnosis: AI model analyzes images and identifies plant diseases
-         - Recommendations: Receive actionable treatment recommendations for detected diseases
-         - Detection History: View past diagnoses with timestamps and images
-   
-   •	**👤 User Management**
-         - Email/Password Authentication: Traditional registration and login
-         - Social Authentication: Sign in with Google, Apple, or Facebook
-         - Password Recovery: Forgot password functionality with email reset
-         - Session Management: Secure session handling with automatic logout
-   
-   •	**📊 Data Persistence**
-         - Cloud Storage: Firestore integration for storing user predictions
-         - History Tracking: Complete history of disease detections with images
-         - User Profiles: Personalized experience with user data storage
+   ### 🌡️ Real-Time Monitoring
+- **Soil Moisture Tracking**: Monitor soil moisture levels with visual feedback and alerts.  
+- **Temperature Monitoring**: Real-time soil temperature readings.  
+- **Live Feed**: Stream live video from your plant camera.  
+
+### 🔬 AI-Powered Disease Detection
+- **Image Capture**: Take plant photos directly from the app.  
+- **Disease Diagnosis**: AI model identifies plant diseases from images.  
+- **Recommendations**: Get actionable advice for treating detected diseases.  
+- **Detection History**: Review past diagnoses with timestamps and images.  
+
+### 👤 User Management
+- **Email/Password Authentication**: Register and log in securely.  
+- **Social Authentication**: Sign in with Google, Apple, or Facebook.  
+- **Password Recovery**: Reset forgotten passwords via email.  
+- **Session Management**: Secure sessions with automatic logout.  
+
+### 📊 Data Persistence
+- **Cloud Storage**: Firestore integration for storing user predictions.  
+- **History Tracking**: Keep a complete record of past disease detections.  
+- **User Profiles**: Personalized experience with saved user data.  
 
       
 ---
 
 ## 🛠️ Tech Stack
-   - Frontend
-      •	Flutter: Cross-platform mobile framework (Dart)
-     
-      •	State Management:
-          BLoC/Cubit for business logic
-     
-      •	Firebase Suite:
-          Firebase Auth (Authentication)
-          Cloud Firestore (Database)
-          Firebase Core (SDK)
-     
-   - Backend/API
-      •	Flask: Python-based REST API server
-     
-      •	Machine Learning: Plant disease detection model
-     
-      •	HTTP Server: Image capture and sensor data endpoints
-          
-   - Third-Party Services
+  **Frontend**
+- Flutter (Dart) for cross-platform mobile apps  
+- BLoC/Cubit for state management  
+- Firebase Suite: Auth, Cloud Firestore, Core SDK  
 
-Google Sign-In: OAuth authentication
-Apple Sign-In: iOS authentication
-Facebook Authentication: Social login
-WebView Flutter: Live camera feed streaming
+**Backend/API**
+- Flask: Python-based REST API server  
+- Machine Learning: Plant disease detection model  
+- HTTP Server: Handles image and sensor data endpoints  
 
-UI/UX Libraries
+**Third-Party Services**
+- Google, Apple, Facebook Sign-In for social login  
+- WebView Flutter for live camera feed  
 
-Icons Plus: Extended icon sets
-Another Flushbar: Custom notifications
-Intl: Internationalization and date formatting
-Path Provider: File system access
+**UI/UX Libraries**
+- Icons Plus, Another Flushbar, Intl, Path Provider  
 
 ---
 ## 🪄 App Preview
